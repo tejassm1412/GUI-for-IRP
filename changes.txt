@@ -1,0 +1,13 @@
+customtkinter.CTkFrame
+tkinter.Frame
+
+customtkinter.CTkLabel
+tkinter.Label
+
+customtkinter.CTkButton
+tkinter.Button
+
+customtkinter.CTkTextbox
+tkinter.Text
+
+, corner_radius=0
