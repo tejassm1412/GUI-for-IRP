@@ -11,3 +11,6 @@ customtkinter.CTkTextbox
 tkinter.Text
 
 , corner_radius=0
+
+customtkinter.CTkRadioButton
+tkinter.Radiobutton

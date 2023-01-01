@@ -18,6 +18,19 @@ import sys
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 
+"""
+main_screen: Starting Screen
+main_screen_1: Camera to capture person's image
+main_screen_2: Recognise Person
+main_screen_3: Unrecognised Options
+main_screen_4: 
+
+"""
+
+
+
+
+
 class App(tkinter.Tk):
 
 
@@ -30,7 +43,8 @@ class App(tkinter.Tk):
         self.title("Maya Gui")
 
         self.attributes('-zoomed', True)
-        
+        self.trigger = 3
+        self.trig2 = 0 #Used o stop the update loop
         self.main_screen()
         self.i = 0
         self.y1 = ""
@@ -205,6 +219,8 @@ class App(tkinter.Tk):
         self.update2()
 
         self.mainloop()
+        
+        
 
 
     def main_screen_2(self): #Recognise Visitor
@@ -336,13 +352,13 @@ class App(tkinter.Tk):
 
         self.visitingCardButton = tkinter.Button(master=self.capture_btn_frame,
                                                 text="Visiting Card",
-                                                command=self.button_event_2,
+                                                command=self.button_event_4,
                                                 padx = 100, pady = 20)
         self.visitingCardButton.grid(row = 0, column = 0, sticky = "sew")
 
         self.ManualButton = tkinter.Button(master=self.capture_btn_frame,
                                                 text="Manual",
-                                                command=self.button_event_2, padx = 100, pady = 20)
+                                                command=self.button_event_3, padx = 100, pady = 20)
         self.ManualButton.grid(row = 0, column = 1, sticky = "sew")
 
         self.capture_btn_frame.grid_rowconfigure(0, weight=1)
@@ -366,6 +382,101 @@ class App(tkinter.Tk):
                                                 text="Back",
                                                 command=self.button_event_1)
         self.button.grid(row=1, column=0, sticky= "nswe")
+
+    def main_screen_4(self): #Capture Picture of the user
+
+
+
+        self.video_source = 0
+
+        # open video source (by default this will try to open the computer webcam)
+        self.vid = MyVideoCapture3(self.video_source)
+        
+        #main Container
+        self.main_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20)
+        self.main_frame.grid(row=1, column = 1, sticky = "news")
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        #logo
+        self.logo_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20)
+        self.logo_frame.grid(row=0, column = 0, sticky = "news")
+
+        self.image = Image.open(PATH + "/kle.png").resize((500, 100))
+        self.logo_image = ImageTk.PhotoImage(self.image)
+        self.logo_label = tkinter.Label(master = self.logo_frame, image = self.logo_image)
+        self.logo_label.grid(row = 0, column=0, sticky = "nwse")
+
+
+        #PosterConfig GRID
+
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=2)
+
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(1, weight= 1)
+
+
+
+        #Poster
+
+        self.poster_main_frame = tkinter.Frame(master=self.main_frame, padx = 20, pady = 20)
+        self.poster_main_frame.grid(row=1, column = 1, sticky = "nwes")
+
+        self.poster_main_frame.grid_columnconfigure(0, weight=1)
+        self.poster_main_frame.grid_rowconfigure(0, weight=1)
+
+        self.poster_frame = tkinter.Frame(master=self.poster_main_frame, padx = 20, pady = 20)
+        self.poster_frame.grid(row=0, column = 0, sticky = "nws")
+        
+        self.poster_frame.grid_columnconfigure(0, weight=1)
+        self.poster_frame.grid_rowconfigure(0, weight=1)
+
+        self.poster_label = tkinter.Label(master = self.poster_frame)
+        self.poster_label.grid(row = 0, column=0, sticky = "nwse")
+
+        #Frame for main buttons such as Visiting Card and Manually
+        self.capture_btn_frame = tkinter.Frame(master=self.main_frame, padx = 20, pady = 20)
+        self.capture_btn_frame.grid(row = 2, column = 1, sticky = "sew")
+
+        self.capture_btn_frame.grid_rowconfigure(0, weight=1)
+        self.capture_btn_frame.grid_columnconfigure(0, weight= 1)
+
+        self.captureButton = tkinter.Button(master=self.capture_btn_frame,
+                                                text="Click", command = self.button_event_7,
+                                                width=50, padx = 100, pady = 20)
+        self.captureButton.grid(row = 0, column = 0, sticky = "sew")
+
+
+
+        #Instructions
+
+        self.instruction_frame = tkinter.Frame(master=self, padx = 20, pady = 20)
+        self.instruction_frame.grid(row=1, column = 0, sticky = "nwes")
+
+        self.instructions = tkinter.Label(master = self.instruction_frame, text= "Instructions come heregfdytdutldigfuylfiyfuyc", padx = 20, pady = 20)
+        self.instructions.grid(row = 0, column=0, sticky = "nwse")
+
+        self.instruction_frame.grid_columnconfigure(0, weight=1)
+        self.instruction_frame.grid_rowconfigure(0, weight=1)
+
+
+
+
+        self.button = tkinter.Button(master=self.instruction_frame,
+                                                text="Back")
+        self.button.grid(row=1, column=0, sticky= "nswe")
+
+
+        # After it is called once, the update2 method will be automatically called every delay milliseconds
+        self.delay = 15
+        print("It should reach here")
+        """
+        self.update3()
+
+        self.mainloop()
+
+        """
 
 
     def main_screen_5(self): #Registration
@@ -476,14 +587,14 @@ class App(tkinter.Tk):
         self.speakButton = tkinter.Button(master=self.speak_frame,
                                                 text="Speak Up!",
                                                 command=self.button_event_5,
-                                                height=3, padx = 100, pady = 20)
-        self.speakButton.grid(row = 0, column = 0, sticky = "sew")
+                                                height=2, padx = 100, pady = 20)
+        self.speakButton.grid(row = 0, column = 0, sticky = "s")
 
         self.Submit_Button = tkinter.Button(master=self.speak_frame,
                                                 text="Submit",
-                                                command=self.button_event_1,
-                                                height=3, padx = 100, pady = 20)
-        self.Submit_Button.grid(row = 0, column = 1, sticky = "sew")
+                                                command=self.button_event_x,
+                                                height=2, padx = 100, pady = 20)
+        self.Submit_Button.grid(row = 0, column = 1, sticky = "s")
 
         self.speak_frame.grid_rowconfigure(0, weight=1)
         self.speak_frame.grid_columnconfigure(1, weight= 1)
@@ -503,32 +614,272 @@ class App(tkinter.Tk):
 
 
         self.button = tkinter.Button(master=self.instruction_frame,
-                                                text="Back",
-                                                height=50, width=50)
+                                                text="Back")
         self.button.grid(row=1, column=0, sticky= "nswe")
-        if self.list[5]:
-            self.idx = self.list[5]
+
+        self.idx = self.list[5]
 
 
         if self.param1 == "alert":
+            if self.trigger == 0:
+                print("YupYupYup")
+                self.name_text.insert(tkinter.END, self.list2[0])
+                self.email_text.insert(tkinter.END, self.list2[1])
+                self.phone_text.insert(tkinter.END, self.list2[2])
+                self.org_text.insert(tkinter.END, self.list2[3])
 
 
-            self.name_text.insert(tkinter.END, self.list[0])
-            self.email_text.insert(tkinter.END, self.list[2])
-            self.phone_text.insert(tkinter.END, self.list[1])
-            self.org_text.insert(tkinter.END, self.list[3])
 
-        elif self.trigger == 0:
-            
-            self.name_text.insert(tkinter.END, self.list2[0])
-            self.email_text.insert(tkinter.END, self.list2[1])
-            self.phone_text.insert(tkinter.END, self.list2[2])
-            self.org_text.insert(tkinter.END, self.list2[3])
+            else:
+                
+                
+                self.name_text.insert(tkinter.END, self.list[0])
+                self.email_text.insert(tkinter.END, self.list[2])
+                self.phone_text.insert(tkinter.END, self.list[1])
+                self.org_text.insert(tkinter.END, self.list[3])
 
         else: 
             pass
 
+    def main_screen_6(self): #Card Picture Capture Frame
+        #main Container
+        self.main_frame = tkinter.Frame(master=self, width=180, corner_radius=0, padx = 20, pady = 20)
+        self.main_frame.grid(row=1, column = 1, sticky = "news")
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        #logo
+        self.logo_frame = tkinter.Frame(master=self, width=180, corner_radius=0, padx = 20, pady = 20, fg_color=None)
+        self.logo_frame.grid(row=0, column = 0, sticky = "news")
+
+        self.image = Image.open(PATH + "/kle.png").resize((500, 100))
+        self.logo_image = ImageTk.PhotoImage(self.image)
+        self.logo_label = tkinter.Label(master = self.logo_frame, image = self.logo_image)
+        self.logo_label.grid(row = 0, column=0, sticky = "nwse")
+
+
+        #PosterConfig GRID
+
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=2)
+
+        self.main_frame.grid_rowconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight= 1)
+
+
+
+        #Poster
+
+        self.poster_main_frame = tkinter.Frame(master=self.main_frame, corner_radius=0, padx = 20, pady = 20)
+        self.poster_main_frame.grid(row=0, column = 0, sticky = "nwes")
+
+        self.poster_main_frame.grid_columnconfigure(0, weight=1)
+        self.poster_main_frame.grid_rowconfigure(0, weight=1)
+
+        self.ocr_text_frame = tkinter.Frame(master=self.poster_main_frame, corner_radius=0, padx = 20, pady = 20)
+        self.ocr_text_frame.grid(row=0, column = 0, sticky = "ns")
+        
+        self.ocr_text_frame.grid_columnconfigure(0, weight=1)
+        self.ocr_text_frame.grid_rowconfigure(0, weight=1)
+
+        self.ocr_text = tkinter.Text(master = self.ocr_text_frame, height=20, width=1000)
+        self.ocr_text.grid(row = 0, column = 0, sticky = "ew")
+
+        self.radio_frame = tkinter.Frame(master=self.poster_main_frame, corner_radius=0, padx = 20, pady = 20)
+        self.radio_frame.grid(row=1, column = 0, sticky = "ns")
+
+        self.radio_var = tkinter.IntVar()
+
+
+        self.radio_button_1 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=0, text="Name")
+        self.radio_button_1.grid(row=1, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_2 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=1, text="Email")
+        self.radio_button_2.grid(row=2, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_3 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=2, text="Phone")
+        self.radio_button_3.grid(row=3, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_4 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=3, text="Organisation")
+        self.radio_button_4.grid(row=4, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_5 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=4, text="Skip")
+        self.radio_button_5.grid(row=5, column=0, pady=10, padx=20, sticky="nw")
+
+
+
+        #Frame for main buttons such as Visiting Card and Manually
+        self.buttons_frame = tkinter.Frame(master=self.main_frame, corner_radius=0, padx = 20, pady = 20)
+        self.buttons_frame.grid(row = 1, column = 0, sticky = "sew")
+
+        self.buttons_frame.grid_rowconfigure(0, weight=1)
+        self.buttons_frame.grid_columnconfigure(0, weight= 1)
+
+        self.submit_Button = tkinter.Button(master=self.buttons_frame,
+                                                text="Next",
+                                                command=self.button_event_8, padx = 100, pady = 20)
+        self.submit_Button.grid(row = 0, column = 0, sticky = "sew")
+
+
+        
+
+
+        #Instructions
+
+        self.instruction_frame = tkinter.Frame(master=self, corner_radius=0, padx = 20, pady = 20)
+        self.instruction_frame.grid(row=1, column = 0, sticky = "nwes")
+
+        self.instructions = tkinter.Label(master = self.instruction_frame, 
+                                                    text= "Instructions\nChoose what field the info\nbelongs to.\n\nSkip in case:\nInfo is irrelevant\nInfo is Blank\n\n", 
+                                                    padx = 20, pady = 20)
+        self.instructions.grid(row = 0, column=0, sticky = "nwse")
+
+        self.instruction_frame.grid_columnconfigure(0, weight=1)
+        self.instruction_frame.grid_rowconfigure(0, weight=1)
+
+
+
+
+        self.button = tkinter.Button(master=self.instruction_frame,
+                                                text="Back",
+                                                command=self.button_event,
+                                                height=50, width=50)
+        self.button.grid(row=1, column=0, sticky= "nswe")
+        self.reset()
+        self.ocr_recognise()
+        
+
+    def main_screen_7(self):
+
+        #main Container
+        self.main_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20)
+        self.main_frame.grid(row=1, column = 1, sticky = "news")
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        #logo
+        self.logo_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20, fg_color=None)
+        self.logo_frame.grid(row=0, column = 0, sticky = "news")
+
+        self.image = Image.open(PATH + "/kle.png").resize((500, 100))
+        self.logo_image = ImageTk.PhotoImage(self.image)
+        self.logo_label = tkinter.Label(master = self.logo_frame, image = self.logo_image)
+        self.logo_label.grid(row = 0, column=0, sticky = "nwse")
+
+
+        #PosterConfig GRID
+
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=2)
+
+        self.main_frame.grid_rowconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight= 1)
+
+
+
+        #Poster
+
+        self.poster_main_frame = tkinter.Frame(master=self.main_frame, padx = 20, pady = 20)
+        self.poster_main_frame.grid(row=0, column = 0, sticky = "nwes")
+
+        self.poster_main_frame.grid_columnconfigure(0, weight=1)
+        self.poster_main_frame.grid_rowconfigure(0, weight=1)
+
+        self.ocr_text_frame = tkinter.Frame(master=self.poster_main_frame, padx = 20, pady = 20)
+        self.ocr_text_frame.grid(row=0, column = 0, sticky = "ns")
+        
+        self.ocr_text_frame.grid_columnconfigure(0, weight=1)
+        self.ocr_text_frame.grid_rowconfigure(0, weight=1)
+
+        self.ocr_text = tkinter.Text(master = self.ocr_text_frame, height=20, width=1000)
+        self.ocr_text.grid(row = 0, column = 0, sticky = "ew")
+
+        self.radio_frame = tkinter.Frame(master=self.poster_main_frame, padx = 20, pady = 20)
+        self.radio_frame.grid(row=1, column = 0, sticky = "ns")
+
+        self.radio_var = tkinter.IntVar()
+
+
+        self.radio_button_1 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=0, text="Name")
+        self.radio_button_1.grid(row=1, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_2 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=1, text="Email")
+        self.radio_button_2.grid(row=2, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_3 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=2, text="Phone")
+        self.radio_button_3.grid(row=3, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_4 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=3, text="Organisation")
+        self.radio_button_4.grid(row=4, column=0, pady=10, padx=20, sticky="nw")
+
+        self.radio_button_5 = tkinter.Radiobutton(master=self.radio_frame,
+                                                           variable=self.radio_var,
+                                                           value=4, text="Skip")
+        self.radio_button_5.grid(row=5, column=0, pady=10, padx=20, sticky="nw")
+
+
+
+        #Frame for main buttons such as Visiting Card and Manually
+        self.buttons_frame = tkinter.Frame(master=self.main_frame, padx = 20, pady = 20)
+        self.buttons_frame.grid(row = 1, column = 0, sticky = "sew")
+
+        self.buttons_frame.grid_rowconfigure(0, weight=1)
+        self.buttons_frame.grid_columnconfigure(0, weight= 1)
+
+        self.submit_Button = tkinter.Button(master=self.buttons_frame,
+                                                text="Next",
+                                                command=self.button_event_8,padx = 100, pady = 20)
+        self.submit_Button.grid(row = 0, column = 0, sticky = "sew")
+
+
+        
+
+
+        #Instructions
+
+        self.instruction_frame = tkinter.Frame(master=self, padx = 20, pady = 20)
+        self.instruction_frame.grid(row=1, column = 0, sticky = "nwes")
+
+        self.instructions = tkinter.Label(master = self.instruction_frame, 
+                                                    text= "Instructions\nChoose what field the info\nbelongs to.\n\nSkip in case:\nInfo is irrelevant\nInfo is Blank\n\n", 
+                                                    padx = 20, pady = 20)
+        self.instructions.grid(row = 0, column=0, sticky = "nwse")
+
+        self.instruction_frame.grid_columnconfigure(0, weight=1)
+        self.instruction_frame.grid_rowconfigure(0, weight=1)
+
+
+
+
+        self.button = tkinter.Button(master=self.instruction_frame,
+                                                text="Back")
+        self.button.grid(row=1, column=0, sticky= "nswe")
+        self.reset()
+        self.ocr_recognise()
+
+
+
+
     def button_event_1(self):#Camera Frame Activate
+
         y = self.msg_box()
         if y=="yes":
             
@@ -537,7 +888,8 @@ class App(tkinter.Tk):
         else:
             print("No")
 
-    def button_event_2(self):#Capture Person Image
+    def button_event_2(self):#Capture Person Image and activate face recog
+        
         self.snapshot()
         y = self.msg_box()
         if y=="yes":
@@ -551,28 +903,32 @@ class App(tkinter.Tk):
     def button_event_3(self):#Manual process
 
         self.trigger = 1 #used later for differentiating the the final pages for these options
+        print("trigger = 1")
         y = self.msg_box()
         if y=="yes":
             self.destroy_window()
-            self.main_screen_3()
+            self.main_screen_5()
         else:
             print("No")
 
     def button_event_4(self): #Leads to Visitor setup
         y = self.msg_box()
-        self.trigger = 0 
         if y=="yes":
+            print("I was Here")
+            self.vid.released()
+            cv2.destroyAllWindows()
             self.destroy_window()
-            self.main_screen_3()
+            self.main_screen_4() #LOL
         else:
             print("No")
 
-    def button_event_5(self):
+    def button_event_5(self): #Speech to text input Value in the boxes
         # name email phone org pov
         
         
         self.text_declaration()
         y=self.speechToTextFn()
+        print("Y = "+y)
         if self.x1 == "":
             self.name_text.insert(tkinter.END, y)
             self.x1 = y
@@ -590,6 +946,8 @@ class App(tkinter.Tk):
             self.x2 = y
 
         elif self.x3 == "":
+            y = y.split(" ")
+            y = "".join(y)
             self.phone_text.insert(tkinter.END, y)
             self.x3 = y
 
@@ -604,7 +962,52 @@ class App(tkinter.Tk):
         else:
             pass
 
-    def button_event_x(self):
+    def button_event_6(self): #Open Visiting Card OCR Frame
+        y = self.msg_box()
+        if y=="yes":
+
+            print("I was Here")
+            self.vid.released()
+            cv2.destroyAllWindows()
+            self.destroy_window()
+            self.main_screen_7()
+        else:
+            print("No")
+
+    def button_event_7(self):#Capture Card Image and activate face recog
+        
+        self.snapshot2()
+        y = self.msg_box()
+        if y=="yes":
+            self.vid.released()
+            cv2.destroyAllWindows()
+            self.destroy_window()
+            self.main_screen_7()
+        else:
+            print("No")
+
+    def button_event_8(self):
+        self.data_match()
+        self.destroy_window()
+        self.main_screen_7()
+        self.ocr_text.insert(tkinter.END, self.ocrs[self.i])
+        
+        self.i += 1
+        print(self.i)
+        print(len(self.ocrs))
+        
+
+        if self.i >= len(self.ocrs):
+            self.ocr_text.insert(tkinter.END, "Done")
+            self.i = 0
+            print("Strings Are:", self.y1, self.y2, self.y3, self.y4)
+            print("y1 =", self.y1, "\n", "y2 =", self.y2, "\n", "y3 =", self.y3, "\n", "y4 =", self.y4, "\n", )
+            self.list2 = [self.y1, self.y2, self.y3, self.y4] #Name, Email, Phone, Organisation, in that order
+            self.trigger = 0
+            self.destroy_window()
+            self.main_screen_5()
+
+    def button_event_x(self): #Final Submit
         y = self.msg_box()
         if y == "yes":
             if self.param2 == "Un-identified Face":
@@ -631,7 +1034,8 @@ class App(tkinter.Tk):
         self.ret, frame = self.vid.get_frame()
 
         if self.ret:
-            cv2.imwrite("/home/tejas/Desktop/MySTuff/20-11-2022/target.jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))   
+            cv2.imwrite(PATH+"/target.jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))   
+
     
 
     def snapshot2(self): #For visiting card
@@ -639,7 +1043,7 @@ class App(tkinter.Tk):
         self.ret, frame = self.vid.get_frame()
 
         if self.ret:
-            cv2.imwrite("/home/tejas/Desktop/MySTuff/20-11-2022/target2.jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(PATH+"/target2.jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
 
     def update2(self):
         # Get a frame from the video source
@@ -651,6 +1055,17 @@ class App(tkinter.Tk):
 
         self.after(self.delay, self.update2)
 
+    def update3(self):
+        # Get a frame from the video source
+        self.ret, frame = self.vid.get_frame()
+
+        if self.ret:
+            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+            self.poster_label.config(image = self.photo)
+
+        self.after(self.delay, self.update2)
+
+
 
     def update(self): 
         # Get a frame from the video source
@@ -659,30 +1074,38 @@ class App(tkinter.Tk):
         if self.ret:
             self.param1 = self.ret
             self.param2 = self.frame
-            if self.ret == "alert":
+            if self.ret == "alert": #Alert found Face
                 
                 if self.frame == 'Un-identified Face':
                     
-                    self.list = ["", "", "", "", ""]
+                    self.list = ["", "", "", "", "", ""]
                     self.destroy_window()
-                    cv2.destroyAllWindows()
                     self.vid.released()
-                    self.main_screen_5()
+                    cv2.destroyAllWindows()
+                    
+                    self.trig2 = 1
+                    self.main_screen_3()
                 else:
                     self.list = self.frame
                     self.destroy_window()
-                    self.main_screen_5() #Change this
+                    self.vid.released()
+                    self.trig2 = 1
+                    cv2.destroyAllWindows()
+                    self.main_screen_5()
 
 
-            elif self.ret: 
+            else: 
                 self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.frame))
-                self.recog_label.configure(image = self.photo)
-
-        self.after(self.delay, self.update)
+                self.recog_label.config(image = self.photo)
 
 
-        #self.cap.release()
-        cv2.destroyAllWindows()
+            print("I Entered Here")
+            self.after(self.delay, self.update)
+
+        if self.trig2 == 1:
+            self.vid.released()
+            cv2.destroyAllWindows()
+
 
 
     def destroy_window(self):
@@ -767,7 +1190,7 @@ class App(tkinter.Tk):
     
 
     def ocr_recognise(self):
-        self.img = cv2.imread('/home/tejas/Desktop/MySTuff/20-11-2022/target2.jpg')
+        self.img = cv2.imread(PATH+'/target2.jpg')
 
         self.img = cv2.resize(self.img, (600, 360))
         #print(pytesseract.image_to_string(self.img))
@@ -834,10 +1257,28 @@ class App(tkinter.Tk):
         self.radioVal = str(self.radio_var.get())
         return self.radioVal
 
+    
+        
+    def update_data(self):
+        # reading the csv file
+        self.df = pd.read_csv("/home/tejas/Desktop/MySTuff/20-11-2022/Data (copy).csv")
+        print(self.x1, self.x2, self.x3, self.x4, self.x5, self.idx)
+
+        # updating the column value/data
+        self.df.loc[self.idx, 'Name'] = self.x1
+        self.df.loc[self.idx, 'Email'] = self.x2
+        self.df.loc[self.idx, 'Phone'] = self.x3
+        self.df.loc[self.idx, 'Organisation'] = self.x4
+        self.df.loc[self.idx, 'Purpose'] = self.x5
+
+        # writing into the file
+        self.df.to_csv("Data (copy).csv", index=False)
+
+    
     def encoding_store(self):
         
         # Load the image and detect the faces
-        image = cv2.imread('/home/tejas/Desktop/MySTuff/20-11-2022/target.jpg')
+        image = cv2.imread(PATH+'/target.jpg')
         face_locations = face_recognition.face_locations(image)
 
         # Extract the face encoding values for each face
@@ -850,28 +1291,10 @@ class App(tkinter.Tk):
             if csvfile.tell()==0:
                 writer.writerow(['', 'Name', 'Encodings', "SoE", "Email","Phone","Organisation","Purpose"])
             for i, encoding in enumerate(encodings):
-                x = len(self.df.index)
+                #x = len(self.df.index)
                 # Convert the encoding to a string separated by ","
                 encoding_str = ",".join(str(x) for x in encoding)
                 writer.writerow([i, self.x1, encoding_str, '', self.x2, self.x3, self.x4, self.x5])
-        
-    def update_data(self):
-        # reading the csv file
-        df = pd.read_csv("/home/tejas/Desktop/MySTuff/20-11-2022/Data (copy).csv")
-        print(self.x1, self.x2, self.x3, self.x4, self.x5, self.idx)
-
-        # updating the column value/data
-        df.loc[self.idx, 'Name'] = self.x1
-        df.loc[self.idx, 'Email'] = self.x2
-        df.loc[self.idx, 'Phone'] = self.x3
-        df.loc[self.idx, 'Organisation'] = self.x4
-        df.loc[self.idx, 'Purpose'] = self.x5
-
-        # writing into the file
-        df.to_csv("Data (copy).csv", index=False)
-
-    
-
 
 
 
@@ -978,46 +1401,6 @@ class MyVideoCapture: #For Face Recognition
         cv2.destroyAllWindows()
 
 
-
-class MyVideoCapture3:#For Capturing Image of the visiting card
-    def __init__(self, video_source=0):
-        # Open the video source
-        self.vid = cv2.VideoCapture(video_source)
-        if not self.vid.isOpened():
-            raise ValueError("Unable to open video source", video_source)
-
-        # Get video source width and height
-        self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-
-    def rescale_frame(self, frame, percent=75):
-        width = int(frame.shape[1] * percent/ 100)
-        height = int(frame.shape[0] * percent/ 100)
-        dim = (width, height)
-        return cv2.resize(frame, dim, interpolation =cv2.INTER_AREA)
-
-    def get_frame(self):
-        if self.vid.isOpened():
-            self.ret, frame = self.vid.read()
-            frame_2 = self.rescale_frame(frame, percent = 200)
-            if self.ret:
-                # Return a boolean success flag and the current frame converted to BGR
-                return (self.ret, cv2.cvtColor(frame_2, cv2.COLOR_BGR2RGB))
-            else:
-                return (self.ret, None)
-        else:
-            return (self.ret, None)
-
-    def released(self):
-        self.vid.release()
-        cv2.destroyAllWindows()
-
-    # Release the video source when the object is destroyed
-    def __del__(self):
-        if self.vid.isOpened():
-            self.vid.release()
-
-
 class MyVideoCapture2:#For Capturing Image of the user
     def __init__(self, video_source=0):
         # Open the video source
@@ -1058,29 +1441,43 @@ class MyVideoCapture2:#For Capturing Image of the user
 
 
 
+class MyVideoCapture3:#For Capturing Image of the visiting card
+    def __init__(self, video_source=0):
+        # Open the video source
+        self.vid = cv2.VideoCapture(video_source)
+        if not self.vid.isOpened():
+            raise ValueError("Unable to open video source", video_source)
 
+        # Get video source width and height
+        self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
+    def rescale_frame(self, frame, percent=75):
+        width = int(frame.shape[1] * percent/ 100)
+        height = int(frame.shape[0] * percent/ 100)
+        dim = (width, height)
+        return cv2.resize(frame, dim, interpolation =cv2.INTER_AREA)
 
+    def get_frame(self):
+        if self.vid.isOpened():
+            self.ret, frame = self.vid.read()
+            frame_2 = self.rescale_frame(frame, percent = 200)
+            if self.ret:
+                # Return a boolean success flag and the current frame converted to BGR
+                return (self.ret, cv2.cvtColor(frame_2, cv2.COLOR_BGR2RGB))
+            else:
+                return (self.ret, None)
+        else:
+            return (self.ret, None)
 
+    def released(self):
+        self.vid.release()
+        cv2.destroyAllWindows()
 
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
+    # Release the video source when the object is destroyed
+    def __del__(self):
+        if self.vid.isOpened():
+            self.vid.release()
 
 
 if __name__ == "__main__":
