@@ -23,6 +23,8 @@ for idx,encoding in enumerate(df['Encodings']):
     encoding=np.array(encoding)
     encoding=encoding.astype(float)
     encodeList.append(encoding)
+
+print(encodeList)
 ######################################################################################
 def findFace(encodeVal):
     dist=face_recognition.face_distance(encodeList,encodeVal)

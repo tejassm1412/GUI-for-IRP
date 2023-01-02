@@ -1,1 +1,1 @@
-            frame_2 = self.rescale_frame(frame, percent = 200)
+0096FF

@@ -125,7 +125,7 @@ class App(tkinter.Tk):
         self.button.grid(row=1, column=0, sticky= "swe")
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
 
     def main_screen_1(self): #Capture Picture of the user
@@ -191,7 +191,7 @@ class App(tkinter.Tk):
         self.capture_btn_frame.grid_columnconfigure(0, weight= 1)
 
         self.captureButton = tkinter.Button(master=self.capture_btn_frame,
-                                                text="Click", bg = "#98FB98",
+                                                text="Click",
                                                 command=self.button_event_2,
                                                 padx = 100, pady = 20)
         self.captureButton.grid(row = 0, column = 0, sticky = "sew")
@@ -214,12 +214,12 @@ class App(tkinter.Tk):
 
         self.button = tkinter.Button(master=self.instruction_frame,
                                                 text="Home",
-                                                command=self.button_event_9,bg = "#0096FF")
+                                                command=self.button_event_9,bg = "#FFFFFF")
         self.button.grid(row=1, column=0, sticky= "nswe")
 
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
 
         # After it is called once, the update2 method will be automatically called every delay milliseconds
@@ -316,13 +316,13 @@ class App(tkinter.Tk):
 
 
         self.button = tkinter.Button(master=self.instruction_frame,
-                                                text="Home",bg = "#0096FF",
+                                                text="Home",
                                                 command=self.button_event_9)
         self.button.grid(row=1, column=0, sticky= "nswe")
 
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
 
     def main_screen_4(self): #Capture Picture of the Visitor Card
@@ -381,7 +381,7 @@ class App(tkinter.Tk):
         self.capture_btn_frame.grid_rowconfigure(0, weight=1)
         self.capture_btn_frame.grid_columnconfigure(0, weight= 1)
 
-        self.captureButton = tkinter.Button(master=self.capture_btn_frame, bg = "#98FB98",
+        self.captureButton = tkinter.Button(master=self.capture_btn_frame,
                                                 text="Click", command = self.button_event_7,
                                                 width=50, padx = 100, pady = 20)
         self.captureButton.grid(row = 0, column = 0, sticky = "sew")
@@ -403,12 +403,12 @@ class App(tkinter.Tk):
 
 
         self.button = tkinter.Button(master=self.instruction_frame,
-                                                text="Home",bg = "#0096FF",
+                                                text="Home",
                                                 command=self.button_event_9)
         self.button.grid(row=1, column=0, sticky= "nswe")
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
 
 
@@ -425,18 +425,18 @@ class App(tkinter.Tk):
     def main_screen_5(self): #Registration
         self.curr_screen = 5
         #main Container
-        self.main_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
+        self.main_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20)
         self.main_frame.grid(row=1, column = 1, sticky = "news")
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(1, weight=1)
 
         #logo
-        self.logo_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20, fg_color=None, bg = "#FFFFFF")
+        self.logo_frame = tkinter.Frame(master=self, width=180, padx = 20, pady = 20, fg_color=None)
         self.logo_frame.grid(row=0, column = 0, sticky = "news")
 
         self.image = Image.open(PATH + "/kle.png").resize((500, 100))
         self.logo_image = ImageTk.PhotoImage(self.image)
-        self.logo_label = tkinter.Label(master = self.logo_frame, image = self.logo_image, bg = "#FFFFFF")
+        self.logo_label = tkinter.Label(master = self.logo_frame, image = self.logo_image)
         self.logo_label.grid(row = 0, column=0, sticky = "nwse")
 
 
@@ -453,24 +453,24 @@ class App(tkinter.Tk):
         self.main_frame.grid_columnconfigure(0, weight=1)
         self.main_frame.grid_rowconfigure(0, weight=1)
 
-        self.reg_label = tkinter.Label(master = self.reg_frame, text = "Registration", bg = "#FFFFFF")
+        self.reg_label = tkinter.Label(master = self.reg_frame, text = "Registration")
         self.reg_label.grid(row = 0, column = 0, sticky = "new")
         self.reg_label.configure(anchor = "center")
         self.reg_frame.grid_columnconfigure(0, weight=1)
         self.reg_frame.grid_rowconfigure(0, weight=1)
         self.reg_frame.grid_rowconfigure(1, weight=4)
 
-        self.det_frame = tkinter.Frame(master=self.reg_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
+        self.det_frame = tkinter.Frame(master=self.reg_frame, width=180, padx = 20, pady = 20)
         self.det_frame.grid(row=1, column = 0, sticky = "news")
         self.det_frame.grid_columnconfigure(0, weight=1)
         self.det_frame.grid_columnconfigure(1, weight=1)
         
 
-        self.name_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
-        self.email_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
-        self.phone_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
-        self.org_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
-        self.pov_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20, bg = "#FFFFFF")
+        self.name_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20)
+        self.email_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20)
+        self.phone_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20)
+        self.org_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20)
+        self.pov_frame = tkinter.Frame(master=self.det_frame, width=180, padx = 20, pady = 20)
 
         self.name_frame.grid(row = 0, column = 0)
         self.email_frame.grid(row = 1, column = 0)
@@ -478,11 +478,11 @@ class App(tkinter.Tk):
         self.org_frame.grid(row = 3, column = 0)
         self.pov_frame.grid(row = 4, column = 0)
 
-        self.name_label = tkinter.Label(master = self.name_frame, text = "Name", bg = "#FFFFFF")
-        self.email_label = tkinter.Label(master = self.email_frame, text = "Email", bg = "#FFFFFF")
-        self.phone_label = tkinter.Label(master = self.phone_frame, text = "Phone", bg = "#FFFFFF")
-        self.org_label = tkinter.Label(master = self.org_frame, text = "Organisation", bg = "#FFFFFF")
-        self.pov_label = tkinter.Label(master = self.pov_frame, text = "Purpose of Visit", bg = "#FFFFFF")
+        self.name_label = tkinter.Label(master = self.name_frame, text = "Name")
+        self.email_label = tkinter.Label(master = self.email_frame, text = "Email")
+        self.phone_label = tkinter.Label(master = self.phone_frame, text = "Phone")
+        self.org_label = tkinter.Label(master = self.org_frame, text = "Organisation")
+        self.pov_label = tkinter.Label(master = self.pov_frame, text = "Purpose of Visit")
 
         self.name_label.grid(row = 0, column = 0)
         self.email_label.grid(row = 0, column = 0)
@@ -529,13 +529,13 @@ class App(tkinter.Tk):
 
         self.speakButton = tkinter.Button(master=self.speak_frame,
                                                 text="Speak Up!",
-                                                command=self.button_event_5,  bg = "#FFFFFF",
+                                                command=self.button_event_5,
                                                 height=2, padx = 100, pady = 20)
         self.speakButton.grid(row = 0, column = 0, sticky = "s")
 
         self.Submit_Button = tkinter.Button(master=self.speak_frame,
                                                 text="Submit",
-                                                command=self.button_event_x, bg = "#FFFFFF",
+                                                command=self.button_event_x,
                                                 height=2, padx = 100, pady = 20)
         self.Submit_Button.grid(row = 0, column = 1, sticky = "s")
 
@@ -557,12 +557,12 @@ class App(tkinter.Tk):
 
 
         self.button = tkinter.Button(master=self.instruction_frame,
-                                                text="Home",bg = "#0096FF",
+                                                text="Home",
                                                 command=self.button_event_9)
         self.button.grid(row=1, column=0, sticky= "nswe")
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
 
         self.idx = self.list[5]
@@ -702,13 +702,13 @@ class App(tkinter.Tk):
 
 
         self.button = tkinter.Button(master=self.instruction_frame,
-                                                text="Home",bg = "#0096FF",
+                                                text="Home",
                                                 command=self.button_event_9,
                                                 height=50, width=50)
         self.button.grid(row=1, column=0, sticky= "nswe")
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
         self.reset()
         self.ocr_recognise()
@@ -824,12 +824,12 @@ class App(tkinter.Tk):
 
 
 
-        self.button = tkinter.Button(master=self.instruction_frame,bg = "#0096FF",
+        self.button = tkinter.Button(master=self.instruction_frame,
                                                 text="Home", command=self.button_event_9)
         self.button.grid(row=1, column=0, sticky= "nswe")
         self.button_2 = tkinter.Button(master=self.instruction_frame,
                                                 text="Quit",
-                                                command=sys.exit, bg = "#FA8072")
+                                                command=sys.exit, bg = "#0096FF")
         self.button_2.grid(row=2, column=0, sticky= "swe")
         self.reset()
         self.ocr_recognise()
