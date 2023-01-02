@@ -978,7 +978,7 @@ class App(tkinter.Tk):
                 self.pdf_create()
                 self.encoding_store()
                 self.destroy()
-                sys.exit()
+                self.button_event_9()
 
 
             else:
@@ -986,7 +986,8 @@ class App(tkinter.Tk):
                 self.pdf_create()
                 self.update_data()
                 self.destroy()
-                sys.exit()
+                self.button_event_9()
+
 
         
         else:
@@ -1159,8 +1160,8 @@ class App(tkinter.Tk):
         pdf.cell(200,10,f"Mobile No.: {data['Mobile Number']}",ln=3,align='L')
         pdf.cell(200,10,f"Organization: {data['Organization']}",ln=4,align='L')
         pdf.cell(200,10,f"Purpose of Visit: {data['POV']}",ln=5,align='L')
-        pdf.image(f'/home/tejas/Desktop/MySTuff/20-11-2022/target.jpg',x=10,y=60,w=60,h=70)
-        pdf.output(f"/home/tejas/Desktop/MySTuff/20-11-2022/PDFs/{data['name']}_LTTS_Pass.pdf")
+        pdf.image(f'/home/irp2022/Desktop/GUI-for-IRP/target.jpg',x=10,y=60,w=60,h=70)
+        pdf.output(f"/home/irp2022/Desktop/GUI-for-IRP/PDFs/{data['name']}_LTTS_Pass.pdf")
 
 
 
@@ -1262,7 +1263,7 @@ class App(tkinter.Tk):
         
     def update_data(self):
         # reading the csv file
-        self.df = pd.read_csv("/home/tejas/Desktop/MySTuff/20-11-2022/Data (copy).csv")
+        self.df = pd.read_csv("/home/irp2022/Desktop/GUI-for-IRP/Data (copy).csv")
         print(self.x1, self.x2, self.x3, self.x4, self.x5, self.idx)
 
         # updating the column value/data
@@ -1286,7 +1287,7 @@ class App(tkinter.Tk):
         encodings = face_recognition.face_encodings(image, face_locations)
 
         # Open the CSV file in append mode
-        with open('/home/tejas/Desktop/MySTuff/20-11-2022/Data (copy).csv', 'a', newline='') as csvfile:
+        with open('/home/irp2022/Desktop/GUI-for-IRP/Data (copy).csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
             # Write the titles on the first row
             if csvfile.tell()==0:
